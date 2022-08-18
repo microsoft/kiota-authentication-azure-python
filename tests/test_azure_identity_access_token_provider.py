@@ -1,7 +1,7 @@
 import pytest
 
-from kiota.abstractions.authentication import AllowedHostsValidator
-from authentication_azure.azure_identity_access_token_provider import AzureIdentityAccessTokenProvider
+from kiota_abstractions.authentication import AllowedHostsValidator
+from kiota_authentication_azure.azure_identity_access_token_provider import AzureIdentityAccessTokenProvider
 from .helpers import DummyAzureTokenCredential
 
 def test_invalid_instantiation_without_credentials():
