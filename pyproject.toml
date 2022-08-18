@@ -7,18 +7,26 @@ name = "kiota-authentication-azure"
 authors = [{name = "Microsoft", email = "graphtooling+python@microsoft.com"}]
 license = {file = "LICENSE"}
 readme = "README.md"
-classifiers = ["License :: OSI Approved :: MIT License"]
+keywords = ["kiota", "openAPI", "Microsoft", "Graph"]
+classifiers = [
+    "Development Status :: Preview",
+    "Programming Language :: Python",
+    "License :: OSI Approved :: MIT License",
+]
+requires-python = ">=3.7"
 dynamic = ["version", "description"]
 
 [project.urls]
-Home = "https://github.com/microsoft/kiota#readme"
+homepage = "https://github.com/microsoft/kiota#readme"
+repository = "https://github.com/microsoft/kiota-authentication-azure-python"
+documentation = "https://microsoft.github.io/kiota/"
 
 [tool.flit.module]
-name = "authentication_azure"
+name = "kiota_authentication_azure"
 
 [tool.mypy]
 warn_unused_configs = true
-files = "authentication_azure"
+files = "kiota_authentication_azure"
 ignore_missing_imports = true
 
 [tool.yapf]
