@@ -1,6 +1,6 @@
 # Kiota Abstractions Library for Python
 [![PyPI version](https://badge.fury.io/py/kiota-authentication-azure.svg)](https://badge.fury.io/py/kiota-authentication-azure)
-[![CI Actions Status](https://github.com/microsoft/kiota-authentication-azure-python/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/microsoft/kiota-authentication-azure-python/actions)
+[![CI Actions Status](https://github.com/microsoft/kiota-authentication-azure-python/actions/workflows/build_publish.yml/badge.svg?branch=main)](https://github.com/microsoft/kiota-authentication-azure-python/actions)
 [![Downloads](https://pepy.tech/badge/kiota-authentication-azure)](https://pepy.tech/project/kiota-authentication-azure)
 
 The Kiota Authentication Azure Library is an implementation to authenticate HTTP requests using @azure/identity.
