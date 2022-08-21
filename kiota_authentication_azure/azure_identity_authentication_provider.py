@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Dict, List, Optional
 
-from kiota.abstractions.authentication import BaseBearerTokenAuthenticationProvider
+from kiota_abstractions.authentication import BaseBearerTokenAuthenticationProvider
 
 from .azure_identity_access_token_provider import AzureIdentityAccessTokenProvider
 

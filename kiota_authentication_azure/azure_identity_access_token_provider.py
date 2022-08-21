@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, Dict, List, Optional
 from urllib.parse import urlparse
 
-from kiota.abstractions.authentication import AccessTokenProvider, AllowedHostsValidator
+from kiota_abstractions.authentication import AccessTokenProvider, AllowedHostsValidator
 
 if TYPE_CHECKING:
     from azure.core.credentials_async import AsyncTokenCredential

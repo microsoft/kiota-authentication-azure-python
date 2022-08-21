@@ -13,7 +13,6 @@ classifiers = [
     "Programming Language :: Python",
     "License :: OSI Approved :: MIT License",
 ]
-requires-python = ">=3.7"
 dynamic = ["version", "description"]
 
 [project.urls]
