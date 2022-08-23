@@ -9,7 +9,6 @@ if TYPE_CHECKING:
 
 
 class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider):
-
     def __init__(
         self,
         credentials: "AsyncTokenCredential",
