@@ -1,7 +1,7 @@
 import pytest
 
-from kiota.abstractions.request_information import RequestInformation
-from authentication_azure.azure_identity_authentication_provider import AzureIdentityAuthenticationProvider
+from kiota_abstractions.request_information import RequestInformation
+from kiota_authentication_azure.azure_identity_authentication_provider import AzureIdentityAuthenticationProvider
 
 from .helpers import DummyAzureTokenCredential
 

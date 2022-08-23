@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, Dict, List, Optional
 from urllib.parse import urlparse
 
-from kiota.abstractions.authentication import AccessTokenProvider, AllowedHostsValidator
+from kiota_abstractions.authentication import AccessTokenProvider, AllowedHostsValidator
 
 if TYPE_CHECKING:
     from azure.core.credentials_async import AsyncTokenCredential
@@ -10,7 +10,6 @@ if TYPE_CHECKING:
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
     """Access token provider that leverages the Azure Identity library to retrieve an access token.
     """
-
     def __init__(
         self,
         credentials: "AsyncTokenCredential",
