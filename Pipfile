@@ -10,7 +10,7 @@ microsoft-kiota-abstractions = "==0.1.0"
 uritemplate = "==4.1.1"
 
 [dev-packages]
-azure-identity = "==1.8.0"
+azure-identity = "==1.11.0"
 flit = "==3.7.1"
 pylint = "==2.12.2"
 mypy = "==0.910"
