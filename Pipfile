@@ -12,7 +12,7 @@ uritemplate = "==4.1.1"
 [dev-packages]
 azure-identity = "==1.11.0"
 flit = "==3.7.1"
-pylint = "==2.12.2"
+pylint = "==2.15.4"
 mypy = "==0.982"
 yapf = "==0.31.0"
 isort = "==5.10.1"
