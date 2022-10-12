@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
     """Access token provider that leverages the Azure Identity library to retrieve an access token.
     """
+
     def __init__(
         self,
         credentials: "AsyncTokenCredential",
