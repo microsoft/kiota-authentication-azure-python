@@ -11,7 +11,7 @@ uritemplate = "==4.1.1"
 
 [dev-packages]
 azure-identity = "==1.11.0"
-flit = "==3.7.1"
+flit = "==3.8.0"
 pylint = "==2.15.5"
 mypy = "==0.990"
 yapf = "==0.32.0"
