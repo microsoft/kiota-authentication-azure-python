@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e95c6d9b8e35377a2ec539aff140800b080dcf812d5446826e18939abd17da8a"
+            "sha256": "db65331bacfdea1839640e411a356a8b1ca620f7699acd993468a00cc008b1a3"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -657,11 +657,11 @@
         },
         "flit": {
             "hashes": [
-                "sha256:06a93a6737fa9380ba85fe8d7f28efb6c93c4f4ee9c7d00cc3375a81f33b91a4",
-                "sha256:3c9bd9c140515bfe62dd938c6610d10d6efb9e35cc647fc614fe5fb3a5036682"
+                "sha256:5ee0f88fd1cfa4160d1a8fa01237e96d06d677ae0403a0bbabbb277cb37c5e9c",
+                "sha256:d0f2a8f4bd45dc794befbf5839ecc0fd3830d65a57bd52b5997542fac5d5e937"
             ],
             "index": "pypi",
-            "version": "==3.7.1"
+            "version": "==3.8.0"
         },
         "flit-core": {
             "hashes": [
@@ -921,14 +921,6 @@
             ],
             "index": "pypi",
             "version": "==0.10.2"
-        },
-        "tomli": {
-            "hashes": [
-                "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
-                "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"
-            ],
-            "markers": "python_version >= '3.7'",
-            "version": "==2.0.1"
         },
         "tomli-w": {
             "hashes": [
