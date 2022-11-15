@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "db65331bacfdea1839640e411a356a8b1ca620f7699acd993468a00cc008b1a3"
+            "sha256": "e3767d0b01cb229f2cdeebabfcf37afc20954948677c53be7fd0c0934c093f23"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -457,11 +457,11 @@
         },
         "azure-identity": {
             "hashes": [
-                "sha256:c3fc800af58b857e7faf0e310376e5ef10f5dad5090914cc42ffa6d7d23b6729",
-                "sha256:f5eb0035ac9ceca26658b30bb2a375755c4cda61d0e3fd236b0e52ade2cb0995"
+                "sha256:2a58ce4a209a013e37eaccfd5937570ab99e9118b3e1acf875eed3a85d541b92",
+                "sha256:7f9b1ae7d97ea7af3f38dd09305e19ab81a1e16ab66ea186b6579d85c1ca2347"
             ],
             "index": "pypi",
-            "version": "==1.11.0"
+            "version": "==1.12.0"
         },
         "certifi": {
             "hashes": [
