@@ -6,10 +6,8 @@ build-backend = "flit_core.buildapi"
 name = "microsoft-kiota-authentication-azure"
 authors = [{name = "Microsoft", email = "graphtooling+python@microsoft.com"}]
 dependencies = [
-    "aiohttp ==3.8.1",
-    "azure-core ==1.21.1",
-    "microsoft-kiota-abstractions ==0.1.0",
-    "uritemplate ==4.1.1",
+    "azure-core >=1.21.1",
+    "microsoft-kiota-abstractions >=0.1.0",
 ]
 license = {file = "LICENSE"}
 readme = "README.md"
