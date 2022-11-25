@@ -4,13 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-aiohttp = "==3.8.3"
+aiohttp = "3.8.3"
 azure-core = "==1.26.1"
 microsoft-kiota-abstractions = "==0.2.0"
-uritemplate = "==4.1.1"
 
 [dev-packages]
-azure-identity = "==1.12.0"
 flit = "==3.8.0"
 pylint = "==2.15.5"
 mypy = "==0.990"
