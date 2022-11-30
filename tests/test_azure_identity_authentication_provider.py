@@ -5,6 +5,7 @@ from kiota_authentication_azure.azure_identity_authentication_provider import (
 )
 from .helpers import DummyAsyncAzureTokenCredential, DummySyncAzureTokenCredential
 
+
 def test_invalid_instantiation_without_credentials():
     with pytest.raises(Exception):
         auth_provider = AzureIdentityAuthenticationProvider(None)

@@ -54,7 +54,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
             if self._options:
                 result = await self._credentials.get_token(*self._scopes, **self._options)
             result = await self._credentials.get_token(*self._scopes)
-            await self._credentials.close() #type: ignore
+            await self._credentials.close()  #type: ignore
         # sync credentials
         else:
             if self._options:
