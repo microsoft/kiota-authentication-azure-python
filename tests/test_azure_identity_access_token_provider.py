@@ -4,6 +4,7 @@ from kiota_abstractions.authentication import AllowedHostsValidator
 from kiota_authentication_azure.azure_identity_access_token_provider import (
     AzureIdentityAccessTokenProvider,
 )
+
 from .helpers import DummyAsyncAzureTokenCredential, DummySyncAzureTokenCredential
 
 

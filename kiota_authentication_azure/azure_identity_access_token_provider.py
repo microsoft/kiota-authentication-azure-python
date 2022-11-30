@@ -6,10 +6,6 @@ from azure.core.credentials import TokenCredential
 from azure.core.credentials_async import AsyncTokenCredential
 from kiota_abstractions.authentication import AccessTokenProvider, AllowedHostsValidator
 
-# if TYPE_CHECKING:
-#     from azure.core.credentials import TokenCredential
-#     from azure.core.credentials_async import AsyncTokenCredential
-
 
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
     """Access token provider that leverages the Azure Identity library to retrieve an access token.
