@@ -6,7 +6,12 @@ class DummyToken:
     token: str
 
 
-class DummyAzureTokenCredential():
+class DummySyncAzureTokenCredential():
+
+    def get_token(self, *args):
+        return DummyToken(token="This is a dummy token")
+
+class DummyAsyncAzureTokenCredential():
 
     async def get_token(self, *args):
         return DummyToken(token="This is a dummy token")
