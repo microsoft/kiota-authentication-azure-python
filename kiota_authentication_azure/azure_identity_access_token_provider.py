@@ -1,10 +1,10 @@
-from typing import TYPE_CHECKING, Dict, List, Optional
+import inspect
+from typing import TYPE_CHECKING, Dict, List, Optional, Union
 from urllib.parse import urlparse
 
+from azure.core.credentials import TokenCredential
+from azure.core.credentials_async import AsyncTokenCredential
 from kiota_abstractions.authentication import AccessTokenProvider, AllowedHostsValidator
-
-if TYPE_CHECKING:
-    from azure.core.credentials_async import AsyncTokenCredential
 
 
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
@@ -13,7 +13,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
 
     def __init__(
         self,
-        credentials: "AsyncTokenCredential",
+        credentials: Union[TokenCredential, AsyncTokenCredential],
         options: Optional[Dict],
         scopes: List[str] = ['https://graph.microsoft.com/.default'],
         allowed_hosts: List[str] = [
@@ -45,11 +45,18 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         parsed_url = urlparse(uri)
         if not parsed_url.scheme == 'https':
             raise Exception("Only https is supported")
+        #async credentials
+        if inspect.iscoroutinefunction(self._credentials.get_token):
+            if self._options:
+                result = await self._credentials.get_token(*self._scopes, **self._options)
+            result = await self._credentials.get_token(*self._scopes)
+            await self._credentials.close()  #type: ignore
+        # sync credentials
+        else:
+            if self._options:
+                result = self._credentials.get_token(*self._scopes, **self._options)
+            result = self._credentials.get_token(*self._scopes)
 
-        if self._options:
-            result = await self._credentials.get_token(*self._scopes, **self._options)
-        result = await self._credentials.get_token(*self._scopes)
-        await self._credentials.close()
         if result and result.token:
             return result.token
         return ""
