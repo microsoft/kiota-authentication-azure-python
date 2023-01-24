@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4e5b5ae17f0a2661cd11e6167ef98f74f5731e3fe7a0cd0cc6a467395d890723"
+            "sha256": "5c293c20470a3985a586f145a16e04c5d93f9b4b19144d0214b64c2415606c32"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -245,11 +245,11 @@
         },
         "microsoft-kiota-abstractions": {
             "hashes": [
-                "sha256:71237640a7037d27f61ff5704bb8864d8a245ec9a6d5a2315b64a775cb020b5f",
-                "sha256:ce04309a210d449cfcee3bb3cfde0af879afaf1c6871f504819bde4ee59daa45"
+                "sha256:73a38d270f6070e525b5160acfa55d06b541e1c044ebd3ce13de569c415de1a3",
+                "sha256:fbf6bf1dd15403b2c1ce2a38563df36d79f4866eb1047d902bc191eb97722b90"
             ],
             "index": "pypi",
-            "version": "==0.2.2"
+            "version": "==0.3.0"
         },
         "multidict": {
             "hashes": [
@@ -455,11 +455,11 @@
     "develop": {
         "astroid": {
             "hashes": [
-                "sha256:3bc7834720e1a24ca797fd785d77efb14f7a28ee8e635ef040b6e2d80ccb3303",
-                "sha256:8f6a8d40c4ad161d6fc419545ae4b2f275ed86d1c989c97825772120842ee0d2"
+                "sha256:14c1603c41cc61aae731cad1884a073c4645e26f126d13ac8346113c95577f3b",
+                "sha256:6afc22718a48a689ca24a97981ad377ba7fb78c133f40335dfd16772f29bcfb1"
             ],
             "markers": "python_full_version >= '3.7.2'",
-            "version": "==2.13.2"
+            "version": "==2.13.3"
         },
         "asyncmock": {
             "hashes": [
