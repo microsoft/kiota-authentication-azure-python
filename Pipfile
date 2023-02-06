@@ -10,7 +10,7 @@ microsoft-kiota-abstractions = "==0.3.0"
 
 [dev-packages]
 flit = "==3.8.0"
-pylint = "==2.15.10"
+pylint = "==2.16.1"
 mypy = "==0.991"
 yapf = "==0.32.0"
 isort = "==5.12.0"
