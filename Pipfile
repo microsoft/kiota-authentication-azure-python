@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 aiohttp = "3.8.3"
-azure-core = "==1.26.2"
+azure-core = "==1.26.3"
 microsoft-kiota-abstractions = "==0.3.0"
 
 [dev-packages]
