@@ -15,24 +15,22 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
         self,
         credentials: Union["TokenCredential", "AsyncTokenCredential"],
         options: Optional[Dict] = None,
-        scopes: List[str] = ['https://graph.microsoft.com/.default'],
-        allowed_hosts: List[str] = [
-            'graph.microsoft.com', 'graph.microsoft.us', 'dod-graph.microsoft.us',
-            'graph.microsoft.de', 'microsoftgraph.chinacloudapi.cn', 'canary.graph.microsoft.com'
-        ]
+        scopes: List[str] = [],
+        allowed_hosts: List[str] = []
     ) -> None:
         """[summary]
 
         Args:
-            credentials (AsyncTokenCredential): The tokenCredential implementation to use for
-            authentication.
+            credentials (Union["TokenCredential", "AsyncTokenCredential"]): The
+                tokenCredential implementation to use for authentication.
             options (Optional[dict]): The options to use for authentication.
-            scopes (List[str], optional): he scopes to use for authentication. Defaults to
-            ['https://graph.microsoft.com/.default'].
-            allowed_hosts (Set[str], optional): The allowed hosts to use for authentication.
-            Defaults to {'graph.microsoft.com', 'graph.microsoft.us', 'dod-graph.microsoft.us',
-            'graph.microsoft.de', 'microsoftgraph.chinacloudapi.cn', 'canary.graph.microsoft.com'}.
+            scopes (List[str], optional): The scopes to use for authentication.
+                Defaults to ['https://graph.microsoft.com/.default'] if it is an
+                empty list.
+            allowed_hosts (Set[str], optional): The allowed hosts to use for
+                authentication.
         """
         super().__init__(
-            AzureIdentityAccessTokenProvider(credentials, options, scopes, allowed_hosts)
+            AzureIdentityAccessTokenProvider(
+                credentials, options, scopes, allowed_hosts)
         )
