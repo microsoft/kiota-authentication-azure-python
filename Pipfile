@@ -6,8 +6,7 @@ name = "pypi"
 [packages]
 aiohttp = "3.8.4"
 azure-core = "==1.26.4"
-microsoft-kiota-abstractions = "==0.5.0"
-exceptiongroup = "*"
+microsoft-kiota-abstractions = "==0.5.1"
 
 [dev-packages]
 flit = "==3.8.0"
