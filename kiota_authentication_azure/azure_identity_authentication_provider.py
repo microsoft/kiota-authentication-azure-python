@@ -31,6 +31,5 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
                 authentication.
         """
         super().__init__(
-            AzureIdentityAccessTokenProvider(
-                credentials, options, scopes, allowed_hosts)
+            AzureIdentityAccessTokenProvider(credentials, options, scopes, allowed_hosts)
         )
