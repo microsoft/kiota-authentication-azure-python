@@ -25,8 +25,7 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
                 tokenCredential implementation to use for authentication.
             options (Optional[dict]): The options to use for authentication.
             scopes (List[str], optional): The scopes to use for authentication.
-                Defaults to ['https://graph.microsoft.com/.default'] if it is an
-                empty list.
+                Defaults to an empty list.
             allowed_hosts (Set[str], optional): The allowed hosts to use for
                 authentication.
         """
