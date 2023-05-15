@@ -15,16 +15,16 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         self,
         credentials: Union[TokenCredential, AsyncTokenCredential],
         options: Optional[Dict],
-        scopes: List[str] = ['https://graph.microsoft.com/.default'],
-        allowed_hosts: List[str] = [
-            'graph.microsoft.com', 'graph.microsoft.us', 'dod-graph.microsoft.us',
-            'graph.microsoft.de', 'microsoftgraph.chinacloudapi.cn', 'canary.graph.microsoft.com'
-        ],
+        scopes: List[str] = [],
+        allowed_hosts: List[str] = [],
     ) -> None:
         if not credentials:
             raise Exception("Parameter credentials cannot be null")
-        if not scopes:
-            raise Exception("Scopes cannot be null")
+        list_error = "should be an empty list or a list of strings"
+        if not isinstance(scopes, list):
+            raise TypeError(f"Scopes {list_error}")
+        if not isinstance(allowed_hosts, list):
+            raise TypeError(f"Allowed hosts {list_error}")
 
         self._credentials = credentials
         self._scopes = scopes
@@ -39,23 +39,31 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         Returns:
             str: The access token to use for the request.
         """
-        if not uri or not self.get_allowed_hosts_validator().is_url_host_valid(uri):
+        if not self.get_allowed_hosts_validator().is_url_host_valid(uri):
             return ""
 
         parsed_url = urlparse(uri)
+        if not all([parsed_url.scheme, parsed_url.netloc]):
+            raise Exception("Only https scheme with a valid host are supported")
+
         if not parsed_url.scheme == 'https':
             raise Exception("Only https is supported")
+
+        if not self._scopes:
+            self._scopes = [f"{parsed_url.scheme}://{parsed_url.netloc}/.default"]
         #async credentials
         if inspect.iscoroutinefunction(self._credentials.get_token):
             if self._options:
                 result = await self._credentials.get_token(*self._scopes, **self._options)
-            result = await self._credentials.get_token(*self._scopes)
+            else:
+                result = await self._credentials.get_token(*self._scopes)
             await self._credentials.close()  #type: ignore
         # sync credentials
         else:
             if self._options:
                 result = self._credentials.get_token(*self._scopes, **self._options)
-            result = self._credentials.get_token(*self._scopes)
+            else:
+                result = self._credentials.get_token(*self._scopes)
 
         if result and result.token:
             return result.token

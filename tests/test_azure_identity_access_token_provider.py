@@ -30,11 +30,20 @@ def test_get_allowed_hosts_validator():
     validator = token_provider.get_allowed_hosts_validator()
     hosts = validator.get_allowed_hosts()
     assert isinstance(validator, AllowedHostsValidator)
-    assert 'graph.microsoft.com' in hosts
-    assert 'graph.microsoft.us' in hosts
-    assert 'graph.microsoft.de' in hosts
-    assert 'microsoftgraph.chinacloudapi.cn' in hosts
-    assert 'canary.graph.microsoft.com' in hosts
+    assert hosts == []
+
+def test_get_allowed_hosts_validator_with_hosts():
+    allowed_hosts = [
+        'graph.microsoft.com', 'graph.microsoft.us', 'dod-graph.microsoft.us',
+        'graph.microsoft.de', 'microsoftgraph.chinacloudapi.cn', 'canary.graph.microsoft.com'
+    ]
+    token_provider = AzureIdentityAccessTokenProvider(DummySyncAzureTokenCredential(), None, scopes=[], allowed_hosts=allowed_hosts)
+    validator = token_provider.get_allowed_hosts_validator()
+    hosts = validator.get_allowed_hosts()
+    hosts.sort()
+    allowed_hosts.sort()
+    assert hosts == allowed_hosts
+    assert isinstance(validator, AllowedHostsValidator)
 
 
 @pytest.mark.asyncio
@@ -57,8 +66,10 @@ async def test_get_authorization_token_sync():
 async def test_get_authorization_token_invalid_url():
 
     token_provider = AzureIdentityAccessTokenProvider(DummyAsyncAzureTokenCredential(), None)
-    token = await token_provider.get_authorization_token('https://example.com')
+    token = await token_provider.get_authorization_token('')
     assert token == ""
+    with pytest.raises(Exception):
+        token = await token_provider.get_authorization_token('https://')
 
 
 @pytest.mark.asyncio
