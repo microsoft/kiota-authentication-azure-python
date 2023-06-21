@@ -11,7 +11,7 @@ microsoft-kiota-abstractions = "==0.5.3"
 [dev-packages]
 flit = "==3.9.0"
 pylint = "==2.17.4"
-mypy = "==1.3.0"
+mypy = "==1.4.0"
 yapf = "==0.40.1"
 isort = "==5.12.0"
 toml = "==0.10.2"
