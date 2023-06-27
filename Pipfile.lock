@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4acfbb9e67f84644a8bbfb71c999cc83868636e4ee3fbaa697ef4d837cff11aa"
+            "sha256": "4a8a05a64e4faa16ea57ccd529978ee77c28b3c44ff92baff86ee40c91ed1286"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -318,11 +318,11 @@
         },
         "microsoft-kiota-abstractions": {
             "hashes": [
-                "sha256:27152023d0a4c3ad2dba52240f5fd3c7276942c7f85f4bab34f16dac4bb71dc4",
-                "sha256:590e3f3f2c8e1d7c525c107bece4afa48faedcf02409f2fc828456cb35fa19fe"
+                "sha256:3ecce255a5b840917d133e80388544c184cf205992f56812eb3d76e0a9bf6716",
+                "sha256:be169fcc2c5cff4873ef108f1b0d8015f44df86d018ddd973fc74cc1e3bcbb66"
             ],
             "index": "pypi",
-            "version": "==0.5.4"
+            "version": "==0.5.5"
         },
         "multidict": {
             "hashes": [
