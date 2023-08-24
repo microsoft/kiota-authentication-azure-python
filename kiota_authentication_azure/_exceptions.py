@@ -1,7 +1,7 @@
-from builtins import Exception
+import builtins
 
 
-class KiotaAuthenticationError(Exception):
+class KiotaAuthenticationError(builtins.Exception):
     """Base class for all Kiota Authentication Azure errors."""
 
 
