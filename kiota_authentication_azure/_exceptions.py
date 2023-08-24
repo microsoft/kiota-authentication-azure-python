@@ -1,3 +1,6 @@
+from builtins import Exception
+
+
 class KiotaAuthenticationError(Exception):
     """Base class for all Kiota Authentication Azure errors."""
 
