@@ -8,7 +8,7 @@ from azure.core.credentials_async import AsyncTokenCredential
 from kiota_abstractions.authentication import AccessTokenProvider, AllowedHostsValidator
 
 from ._exceptions import HTTPError
-from ._observability import Observability
+from ._observability import Observability, tracer
 
 
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
@@ -48,8 +48,9 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         Returns:
             str: The access token to use for the request.
         """
-        span = self._observability.start_tracing_span(uri, "get_authorization_token")
-        try:
+        with tracer.start_as_current_span(
+            self._observability.create_parent_span_name(uri, "get_authorization_token")
+        ) as span:
             if not self.get_allowed_hosts_validator().is_url_host_valid(uri):
                 span.set_attribute(self.IS_VALID_URL, False)
                 return ""
@@ -84,8 +85,6 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
             if result and isinstance(result, AccessToken):
                 return result.token
             return ""
-        finally:
-            span.end()
 
     def get_allowed_hosts_validator(self) -> AllowedHostsValidator:
         """Retrieves the allowed hosts validator.

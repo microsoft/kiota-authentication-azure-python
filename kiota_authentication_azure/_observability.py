@@ -10,21 +10,12 @@ tracer = trace.get_tracer(ObservabilityOptions.get_tracer_instrumentation_name()
 class Observability:
     """Helper object to manage creation of spans."""
 
-    def start_tracing_span(self, uri: str, method: str) -> trace.Span:
-        """Creates an Opentelemetry tracer and starts the parent span.
-
-        Args:
-            uri(str): the encoded URI.
-            method(str): name of the invoker.
-
-        Returns:
-            The parent span.
-        """
+    def create_parent_span_name(self, uri: str, method: str) -> str:
+        """Creates a parent span name for the given method."""
         name_handler = ParametersNameDecodingHandler()
         uri_template = name_handler.decode_uri_encoded_string(uri)
         parent_span_name = f"{method} - {uri_template}"
-        span = tracer.start_span(parent_span_name)
-        return span
+        return parent_span_name
 
     def _start_local_tracing_span(self, name: str, parent_span: trace.Span) -> trace.Span:
         """Helper method to start a span locally with the parent context."""
