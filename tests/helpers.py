@@ -8,13 +8,13 @@ class DummyToken:
 
 class DummySyncAzureTokenCredential():
 
-    def get_token(self, *args):
+    def get_token(self, *args, claims = None):
         return DummyToken(token="This is a dummy token")
 
 
 class DummyAsyncAzureTokenCredential():
 
-    async def get_token(self, *args):
+    async def get_token(self, *args, claims = None):
         return DummyToken(token="This is a dummy token")
 
     async def close(self, *args):
