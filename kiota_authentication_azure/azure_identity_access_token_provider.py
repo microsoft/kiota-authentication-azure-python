@@ -1,5 +1,6 @@
+import base64
 import inspect
-from typing import TYPE_CHECKING, Dict, List, Optional, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 from urllib.parse import urlparse
 
 from azure.core.credentials import TokenCredential
@@ -10,6 +11,7 @@ from kiota_abstractions.authentication import AccessTokenProvider, AllowedHostsV
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
     """Access token provider that leverages the Azure Identity library to retrieve an access token.
     """
+    CLAIMS_KEY = "claims"
 
     def __init__(
         self,
@@ -31,7 +33,9 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         self._options = options
         self._allowed_hosts_validator = AllowedHostsValidator(allowed_hosts)
 
-    async def get_authorization_token(self, uri: str) -> str:
+    async def get_authorization_token(
+        self, uri: str, additional_authentication_context: Dict[str, Any] = {}
+    ) -> str:
         """This method is called by the BaseBearerTokenAuthenticationProvider class to get the
         access token.
         Args:
@@ -49,24 +53,33 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         if not parsed_url.scheme == 'https':
             raise Exception("Only https is supported")
 
+        decoded_claim = None
+        if all(
+            [
+                additional_authentication_context, self.CLAIMS_KEY
+                in additional_authentication_context,
+                isinstance(additional_authentication_context.get(self.CLAIMS_KEY), str)
+            ]
+        ):
+            decoded_bytes = base64.b64decode(additional_authentication_context[self.CLAIMS_KEY])
+            decoded_claim = decoded_bytes.decode("utf-8")
+
         if not self._scopes:
             self._scopes = [f"{parsed_url.scheme}://{parsed_url.netloc}/.default"]
-        #async credentials
-        if inspect.iscoroutinefunction(self._credentials.get_token):
-            if self._options:
-                result = await self._credentials.get_token(*self._scopes, **self._options)
-            else:
-                result = await self._credentials.get_token(*self._scopes)
-            await self._credentials.close()  #type: ignore
-        # sync credentials
-        else:
-            if self._options:
-                result = self._credentials.get_token(*self._scopes, **self._options)
-            else:
-                result = self._credentials.get_token(*self._scopes)
 
-        if result and result.token:
-            return result.token
+        if self._options:
+            result = self._credentials.get_token(
+                *self._scopes, claims=decoded_claim, **self._options
+            )
+        else:
+            result = self._credentials.get_token(*self._scopes, claims=decoded_claim)
+
+        if inspect.isawaitable(result):
+            result = await result
+            await self._credentials.close()  #type: ignore
+
+        if result and result.token: #type: ignore
+            return result.token #type: ignore
         return ""
 
     def get_allowed_hosts_validator(self) -> AllowedHostsValidator:
