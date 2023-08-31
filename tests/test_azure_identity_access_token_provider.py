@@ -10,7 +10,7 @@ from .helpers import DummyAsyncAzureTokenCredential, DummySyncAzureTokenCredenti
 
 def test_invalid_instantiation_without_credentials():
     with pytest.raises(Exception):
-        token_provider = AzureIdentityAccessTokenProvider(None, None)
+        token_provider = AzureIdentityAccessTokenProvider(None)
 
 
 def test_valid_instantiation_without_options():
