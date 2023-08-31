@@ -78,8 +78,8 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
             result = await result
             await self._credentials.close()  #type: ignore
 
-        if result and result.token: #type: ignore
-            return result.token #type: ignore
+        if result and result.token:  #type: ignore
+            return result.token  #type: ignore
         return ""
 
     def get_allowed_hosts_validator(self) -> AllowedHostsValidator:
