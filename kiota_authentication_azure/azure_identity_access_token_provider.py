@@ -1,6 +1,7 @@
+import base64
 import inspect
 from pickle import TRUE
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Any, Union
 from urllib.parse import urlparse
 
 from azure.core.credentials import AccessToken, TokenCredential
@@ -12,7 +13,9 @@ from ._exceptions import HTTPError
 from ._observability_options import ObservabilityOptions
 from ._version import VERSION
 
-tracer = trace.get_tracer(ObservabilityOptions.get_tracer_instrumentation_name(), VERSION)
+tracer = trace.get_tracer(
+    ObservabilityOptions.get_tracer_instrumentation_name(), VERSION
+)
 
 
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
@@ -23,7 +26,10 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
 
     IS_VALID_URL = "com.microsoft.kiota.authentication.is_url_valid"
     SCOPES = "com.microsoft.kiota.authentication.scopes"
-    ADDITIONAL_CLAIMS_PROVIDED = "com.microsoft.kiota.authentication.additional_claims_provided"
+    ADDITIONAL_CLAIMS_PROVIDED = (
+        "com.microsoft.kiota.authentication.additional_claims_provided"
+    )
+    CLAIMS_KEY = "claims"
 
     def __init__(
         self,
@@ -49,7 +55,9 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
             observability_options = ObservabilityOptions()
         self._observability_options = observability_options
 
-    async def get_authorization_token(self, uri: str) -> str:
+    async def get_authorization_token(
+        self, uri: str, additional_authentication_context: Dict[str, Any] = {}
+    ) -> str:
         """This method is called by the BaseBearerTokenAuthenticationProvider class to get the
         access token.
         Args:
@@ -76,18 +84,39 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
                 raise exc
 
             span.set_attribute(self.IS_VALID_URL, TRUE)
+
+            decoded_claim = None
+            if all(
+                [
+                    additional_authentication_context,
+                    self.CLAIMS_KEY in additional_authentication_context,
+                    isinstance(
+                        additional_authentication_context.get(self.CLAIMS_KEY), str
+                    ),
+                ]
+            ):
+                decoded_bytes = base64.b64decode(
+                    additional_authentication_context[self.CLAIMS_KEY]
+                )
+                decoded_claim = decoded_bytes.decode("utf-8")
+
             if not self._scopes:
                 self._scopes = [f"{parsed_url.scheme}://{parsed_url.netloc}/.default"]
             span.set_attribute(self.SCOPES, ",".join(self._scopes))
             span.set_attribute(self.ADDITIONAL_CLAIMS_PROVIDED, bool(self._options))
 
             if self._options:
-                result = self._credentials.get_token(*self._scopes, **self._options)
+                result = self._credentials.get_token(
+                    *self._scopes, claims=decoded_claim, **self._options
+                )
             else:
-                result = self._credentials.get_token(*self._scopes)
+                result = self._credentials.get_token(
+                    *self._scopes, claims=decoded_claim
+                )
 
             if inspect.isawaitable(result):
                 result = await result
+                await self._credentials.close()  # type: ignore
 
             if result and isinstance(result, AccessToken):
                 return result.token
