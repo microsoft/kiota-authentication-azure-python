@@ -1,7 +1,7 @@
 import base64
 import inspect
 from pickle import TRUE
-from typing import Dict, List, Optional, Union, Any, Union
+from typing import Any, Dict, List, Optional, Union
 from urllib.parse import urlparse
 
 from azure.core.credentials import AccessToken, TokenCredential
@@ -13,9 +13,7 @@ from ._exceptions import HTTPError
 from ._observability_options import ObservabilityOptions
 from ._version import VERSION
 
-tracer = trace.get_tracer(
-    ObservabilityOptions.get_tracer_instrumentation_name(), VERSION
-)
+tracer = trace.get_tracer(ObservabilityOptions.get_tracer_instrumentation_name(), VERSION)
 
 
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
@@ -26,9 +24,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
 
     IS_VALID_URL = "com.microsoft.kiota.authentication.is_url_valid"
     SCOPES = "com.microsoft.kiota.authentication.scopes"
-    ADDITIONAL_CLAIMS_PROVIDED = (
-        "com.microsoft.kiota.authentication.additional_claims_provided"
-    )
+    ADDITIONAL_CLAIMS_PROVIDED = "com.microsoft.kiota.authentication.additional_claims_provided"
     CLAIMS_KEY = "claims"
 
     def __init__(
@@ -90,14 +86,10 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
                 [
                     additional_authentication_context,
                     self.CLAIMS_KEY in additional_authentication_context,
-                    isinstance(
-                        additional_authentication_context.get(self.CLAIMS_KEY), str
-                    ),
+                    isinstance(additional_authentication_context.get(self.CLAIMS_KEY), str),
                 ]
             ):
-                decoded_bytes = base64.b64decode(
-                    additional_authentication_context[self.CLAIMS_KEY]
-                )
+                decoded_bytes = base64.b64decode(additional_authentication_context[self.CLAIMS_KEY])
                 decoded_claim = decoded_bytes.decode("utf-8")
 
             if not self._scopes:
@@ -110,9 +102,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
                     *self._scopes, claims=decoded_claim, **self._options
                 )
             else:
-                result = self._credentials.get_token(
-                    *self._scopes, claims=decoded_claim
-                )
+                result = self._credentials.get_token(*self._scopes, claims=decoded_claim)
 
             if inspect.isawaitable(result):
                 result = await result
