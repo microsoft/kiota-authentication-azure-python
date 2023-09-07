@@ -6,13 +6,19 @@ from urllib.parse import urlparse
 from azure.core.credentials import AccessToken, TokenCredential
 from azure.core.credentials_async import AsyncTokenCredential
 from kiota_abstractions.authentication import AccessTokenProvider, AllowedHostsValidator
+from opentelemetry import trace
 
 from ._exceptions import HTTPError
-from ._observability import Observability, tracer
+from ._observability_options import ObservabilityOptions
+from ._version import VERSION
+
+tracer = trace.get_tracer(ObservabilityOptions.get_tracer_instrumentation_name(), VERSION)
 
 
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
-    """Access token provider that leverages the Azure Identity library to retrieve an access token.
+    """
+    Access token provider that leverages the Azure Identity library to retrieve
+    an access token.
     """
 
     IS_VALID_URL = "com.microsoft.kiota.authentication.is_url_valid"
@@ -21,10 +27,11 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
 
     def __init__(
         self,
-        credentials: Union['TokenCredential', 'AsyncTokenCredential'],
+        credentials: Union["TokenCredential", "AsyncTokenCredential"],
         options: Optional[Dict],
         scopes: List[str] = [],
         allowed_hosts: List[str] = [],
+        observability_options: Optional[ObservabilityOptions] = None,
     ) -> None:
         if not credentials:
             raise ValueError("Parameter credentials cannot be null")
@@ -38,7 +45,9 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         self._scopes = scopes
         self._options = options
         self._allowed_hosts_validator = AllowedHostsValidator(allowed_hosts)
-        self._observability = Observability()
+        if observability_options is None:
+            observability_options = ObservabilityOptions()
+        self._observability_options = observability_options
 
     async def get_authorization_token(self, uri: str) -> str:
         """This method is called by the BaseBearerTokenAuthenticationProvider class to get the
@@ -48,9 +57,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         Returns:
             str: The access token to use for the request.
         """
-        with tracer.start_as_current_span(
-            self._observability.create_parent_span_name(uri, "get_authorization_token")
-        ) as span:
+        with tracer.start_as_current_span("get_authorization_token") as span:
             if not self.get_allowed_hosts_validator().is_url_host_valid(uri):
                 span.set_attribute(self.IS_VALID_URL, False)
                 return ""
@@ -62,7 +69,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
                 span.record_exception(exc)
                 raise exc
 
-            if not parsed_url.scheme == 'https':
+            if not parsed_url.scheme == "https":
                 span.set_attribute(self.IS_VALID_URL, False)
                 exc = HTTPError("Only https is supported")
                 span.record_exception(exc)

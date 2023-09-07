@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Dict, List, Optional, Union
 
 from kiota_abstractions.authentication import BaseBearerTokenAuthenticationProvider
 
+from ._observability_options import ObservabilityOptions
 from .azure_identity_access_token_provider import AzureIdentityAccessTokenProvider
 
 if TYPE_CHECKING:
@@ -16,7 +17,8 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
         credentials: Union["TokenCredential", "AsyncTokenCredential"],
         options: Optional[Dict] = None,
         scopes: List[str] = [],
-        allowed_hosts: List[str] = []
+        allowed_hosts: List[str] = [],
+        observability_options: Optional[ObservabilityOptions] = None,
     ) -> None:
         """[summary]
 
@@ -30,5 +32,7 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
                 authentication.
         """
         super().__init__(
-            AzureIdentityAccessTokenProvider(credentials, options, scopes, allowed_hosts)
+            AzureIdentityAccessTokenProvider(
+                credentials, options, scopes, allowed_hosts, observability_options
+            )
         )
