@@ -10,10 +10,9 @@ from kiota_abstractions.authentication import AccessTokenProvider, AllowedHostsV
 from opentelemetry import trace
 
 from ._exceptions import HTTPError
-from ._observability_options import ObservabilityOptions
 from ._version import VERSION
 
-tracer = trace.get_tracer(ObservabilityOptions.get_tracer_instrumentation_name(), VERSION)
+tracer = trace.get_tracer("microsoft-kiota-authentication-azure", VERSION)
 
 
 class AzureIdentityAccessTokenProvider(AccessTokenProvider):
@@ -24,7 +23,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
 
     IS_VALID_URL = "com.microsoft.kiota.authentication.is_url_valid"
     SCOPES = "com.microsoft.kiota.authentication.scopes"
-    ADDITIONAL_CLAIMS_PROVIDED = "com.microsoft.kiota.authentication.additional_claims_provided"
+    ADDITIONAL_CLAIMS_PROVIDED = ("com.microsoft.kiota.authentication.additional_claims_provided")
     CLAIMS_KEY = "claims"
 
     def __init__(
@@ -33,7 +32,6 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         options: Optional[Dict],
         scopes: List[str] = [],
         allowed_hosts: List[str] = [],
-        observability_options: Optional[ObservabilityOptions] = None,
     ) -> None:
         if not credentials:
             raise ValueError("Parameter credentials cannot be null")
@@ -47,9 +45,6 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         self._scopes = scopes
         self._options = options
         self._allowed_hosts_validator = AllowedHostsValidator(allowed_hosts)
-        if observability_options is None:
-            observability_options = ObservabilityOptions()
-        self._observability_options = observability_options
 
     async def get_authorization_token(
         self, uri: str, additional_authentication_context: Dict[str, Any] = {}
