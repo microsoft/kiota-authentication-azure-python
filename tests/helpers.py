@@ -9,14 +9,14 @@ class DummyToken(AccessToken):
 class DummySyncAzureTokenCredential:
     """Helper to mock getting a token synchronously."""
 
-    def get_token(self, *args):
+    def get_token(self, *args, **kwargs):
         return DummyToken(token="This is a dummy token", expires_on=123)
 
 
 class DummyAsyncAzureTokenCredential:
     """Helper to mock getting a token asynchronously."""
 
-    async def get_token(self, *args):
+    async def get_token(self, *args, **kwargs):
         return DummyToken(token="This is a dummy token", expires_on=123)
 
     async def close(self, *args):

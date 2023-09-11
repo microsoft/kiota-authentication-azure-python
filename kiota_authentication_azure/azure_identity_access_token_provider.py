@@ -23,7 +23,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
 
     IS_VALID_URL = "com.microsoft.kiota.authentication.is_url_valid"
     SCOPES = "com.microsoft.kiota.authentication.scopes"
-    ADDITIONAL_CLAIMS_PROVIDED = ("com.microsoft.kiota.authentication.additional_claims_provided")
+    ADDITIONAL_CLAIMS_PROVIDED = "com.microsoft.kiota.authentication.additional_claims_provided"
     CLAIMS_KEY = "claims"
 
     def __init__(
