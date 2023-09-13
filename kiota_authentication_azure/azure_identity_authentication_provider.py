@@ -16,7 +16,7 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
         credentials: Union["TokenCredential", "AsyncTokenCredential"],
         options: Optional[Dict] = None,
         scopes: List[str] = [],
-        allowed_hosts: List[str] = []
+        allowed_hosts: List[str] = [],
     ) -> None:
         """[summary]
 
