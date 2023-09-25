@@ -72,7 +72,7 @@ tomlkit==0.12.1 ; python_version >= '3.7'
 
 types-pyyaml==6.0.12.12
 
-types-requests==2.31.0.3
+types-requests==2.31.0.4
 
 types-urllib3==1.26.25.14
 
