@@ -25,6 +25,8 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
     SCOPES = "com.microsoft.kiota.authentication.scopes"
     ADDITIONAL_CLAIMS_PROVIDED = "com.microsoft.kiota.authentication.additional_claims_provided"
     CLAIMS_KEY = "claims"
+    LOCALHOST_STRINGS = {"localhost", "[::1]", "::1", "127.0.0.1"}
+    
 
     def __init__(
         self,
@@ -64,11 +66,11 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
             parsed_url = urlparse(uri)
             if not all([parsed_url.scheme, parsed_url.netloc]):
                 span.set_attribute(self.IS_VALID_URL, False)
-                exc = HTTPError("Only https scheme with a valid host are supported")
+                exc = HTTPError("Valid url scheme and host required")
                 span.record_exception(exc)
                 raise exc
 
-            if not parsed_url.scheme == "https":
+            if not parsed_url.scheme == "https" and parsed_url.scheme not in self.LOCALHOST_STRINGS:
                 span.set_attribute(self.IS_VALID_URL, False)
                 exc = HTTPError("Only https is supported")
                 span.record_exception(exc)
