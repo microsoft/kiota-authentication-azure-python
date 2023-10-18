@@ -71,9 +71,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
                 span.record_exception(exc)
                 raise exc
 
-            if parsed_url.scheme != "https" and (
-                parsed_url.hostname not in self.LOCALHOST_STRINGS
-            ):
+            if parsed_url.scheme != "https" and (parsed_url.hostname not in self.LOCALHOST_STRINGS):
                 span.set_attribute(self.IS_VALID_URL, False)
                 exc = HTTPError("Only https is supported")
                 span.record_exception(exc)
