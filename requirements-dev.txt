@@ -68,7 +68,7 @@ tomli==2.0.1 ; python_version < '3.11'
 
 tomli-w==1.0.0 ; python_version >= '3.7'
 
-tomlkit==0.12.2 ; python_version >= '3.7'
+tomlkit==0.12.3 ; python_version >= '3.7'
 
 types-pyyaml==6.0.12.12
 
