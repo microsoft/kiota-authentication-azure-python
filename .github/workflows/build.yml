@@ -2,6 +2,7 @@ name: Python Authentication Azure
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches: [main]
   pull_request:
@@ -12,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,26 +40,3 @@ jobs:
       - name: Run tests with Pytest
         run: |
           pytest
-
-  publish:
-    name: Publish distribution to PyPI
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-latest
-    environment: pypi_prod
-    needs: [build]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.8
-      - name: Install flit
-        run: |
-          pip install flit
-      - name: Publish the distibution to PyPI
-        run: flit publish
-        env:
-          FLIT_INDEX_URL: https://upload.pypi.org/legacy/
-          FLIT_USERNAME: __token__
-          FLIT_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
