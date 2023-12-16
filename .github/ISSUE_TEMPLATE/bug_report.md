@@ -17,8 +17,8 @@ assignees: ''
 
 **Environment**
 
-- Python Version
-- kiota-abstractions version:
+- Python Version:
+- kiota-authentication-azure version:
 - OS:
 
 **Stack trace (if available)**
