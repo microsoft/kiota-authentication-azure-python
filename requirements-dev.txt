@@ -60,7 +60,7 @@ pyyaml==6.0.1 ; python_version >= '3.6'
 
 requests==2.32.3 ; python_version >= '3.7'
 
-responses==0.25.2
+responses==0.25.3
 
 toml==0.10.2
 
