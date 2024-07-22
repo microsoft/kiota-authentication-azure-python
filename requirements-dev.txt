@@ -1,6 +1,6 @@
 -i https://pypi.org/simple
 
-astroid==3.2.3 ; python_full_version >= '3.7.2'
+astroid==3.2.4 ; python_full_version >= '3.7.2'
 
 asyncmock==0.4.2
 
@@ -46,7 +46,7 @@ platformdirs==4.2.2 ; python_version >= '3.7'
 
 pluggy==1.5.0 ; python_version >= '3.7'
 
-pylint==3.2.5
+pylint==3.2.6
 
 pytest==8.3.1
 
