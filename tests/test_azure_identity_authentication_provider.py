@@ -6,7 +6,6 @@ from kiota_authentication_azure.azure_identity_authentication_provider import (
 )
 from unittest.mock import MagicMock
 
-
 from .helpers import DummyAsyncAzureTokenCredential, DummySyncAzureTokenCredential
 
 
@@ -24,20 +23,24 @@ async def test_valid_instantiation_without_options():
     assert isinstance(auth_provider, AzureIdentityAuthenticationProvider)
     assert 'authorization' in request_info.request_headers
 
+
 @pytest.mark.asyncio
 async def test_adds_claim_to_the_token_context(mocker):
     credential = DummyAsyncAzureTokenCredential()
     mocker.patch.object(credential, 'get_token', autospec=True)
     auth_provider = AzureIdentityAuthenticationProvider(credential)
-    
+
     request_info = RequestInformation()
     request_info.url = "https://graph.microsoft.com"
     await auth_provider.authenticate_request(
-        request_info,
-        {"claims": "eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTY1MjgxMzUwOCJ9fX0="}
-        )
+        request_info, {
+            "claims":
+            "eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTY1MjgxMzUwOCJ9fX0="
+        }
+    )
     assert isinstance(auth_provider, AzureIdentityAuthenticationProvider)
     credential.get_token.assert_called_once_with(
         'https://graph.microsoft.com/.default',
-        claims = """{"access_token":{"nbf":{"essential":true, "value":"1652813508"}}}"""
+        claims="""{"access_token":{"nbf":{"essential":true, "value":"1652813508"}}}""",
+        is_cae_enabled=True
     )
