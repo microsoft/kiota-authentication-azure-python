@@ -17,6 +17,7 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
         options: Optional[Dict] = None,
         scopes: List[str] = [],
         allowed_hosts: List[str] = [],
+        is_cae_enabled: bool = True,
     ) -> None:
         """[summary]
 
@@ -30,5 +31,7 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
                 authentication.
         """
         super().__init__(
-            AzureIdentityAccessTokenProvider(credentials, options, scopes, allowed_hosts)
+            AzureIdentityAccessTokenProvider(
+                credentials, options, scopes, allowed_hosts, is_cae_enabled=is_cae_enabled
+            )
         )

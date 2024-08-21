@@ -33,6 +33,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         options: Optional[Dict],
         scopes: List[str] = [],
         allowed_hosts: List[str] = [],
+        is_cae_enabled: bool = True,
     ) -> None:
         if not credentials:
             raise ValueError("Parameter credentials cannot be null")
@@ -45,10 +46,13 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         self._credentials = credentials
         self._scopes = scopes
         self._options = options
+        self._is_cae_enabled = is_cae_enabled
         self._allowed_hosts_validator = AllowedHostsValidator(allowed_hosts)
 
     async def get_authorization_token(
-        self, uri: str, additional_authentication_context: Dict[str, Any] = {}
+        self,
+        uri: str,
+        additional_authentication_context: Dict[str, Any] = {},
     ) -> str:
         """This method is called by the BaseBearerTokenAuthenticationProvider class to get the
         access token.
@@ -97,10 +101,15 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
 
             if self._options:
                 result = self._credentials.get_token(
-                    *self._scopes, claims=decoded_claim, **self._options
+                    *self._scopes,
+                    claims=decoded_claim,
+                    is_cae_enabled=self._is_cae_enabled,
+                    **self._options
                 )
             else:
-                result = self._credentials.get_token(*self._scopes, claims=decoded_claim)
+                result = self._credentials.get_token(
+                    *self._scopes, claims=decoded_claim, is_cae_enabled=self._is_cae_enabled
+                )
 
             if inspect.isawaitable(result):
                 result = await result
