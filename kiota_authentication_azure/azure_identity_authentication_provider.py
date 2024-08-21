@@ -15,6 +15,7 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
         self,
         credentials: Union["TokenCredential", "AsyncTokenCredential"],
         options: Optional[Dict] = None,
+        is_cae_enabled: bool = True,
         scopes: List[str] = [],
         allowed_hosts: List[str] = [],
     ) -> None:
@@ -30,5 +31,5 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
                 authentication.
         """
         super().__init__(
-            AzureIdentityAccessTokenProvider(credentials, options, scopes, allowed_hosts)
+            AzureIdentityAccessTokenProvider(credentials, options,is_cae_enabled, scopes, allowed_hosts)
         )
