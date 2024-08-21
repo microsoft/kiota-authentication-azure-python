@@ -54,7 +54,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         self,
         uri: str,
         additional_authentication_context: Dict[str, Any] = {},
-        is_cae_enabled: Optional[bool] = None,
+        is_cae_enabled: Optional[bool] = True
     ) -> str:
         """This method is called by the BaseBearerTokenAuthenticationProvider class to get the
         access token.
