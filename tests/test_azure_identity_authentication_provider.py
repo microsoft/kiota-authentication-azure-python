@@ -42,5 +42,5 @@ async def test_adds_claim_to_the_token_context(mocker):
     credential.get_token.assert_called_once_with(
         'https://graph.microsoft.com/.default',
         claims="""{"access_token":{"nbf":{"essential":true, "value":"1652813508"}}}""",
-        is_cae_enabled=True
+        enable_cae=True
     )
