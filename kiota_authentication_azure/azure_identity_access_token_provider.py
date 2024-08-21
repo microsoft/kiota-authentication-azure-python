@@ -108,7 +108,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
                 )
             else:
                 result = self._credentials.get_token(
-                    *self._scopes, claims=decoded_claim, is_cae_enabled=self.is_cae_enabled
+                    *self._scopes, claims=decoded_claim, is_cae_enabled=self._is_cae_enabled
                 )
 
             if inspect.isawaitable(result):
