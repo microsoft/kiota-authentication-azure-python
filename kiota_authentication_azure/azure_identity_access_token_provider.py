@@ -26,6 +26,8 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
     ADDITIONAL_CLAIMS_PROVIDED = "com.microsoft.kiota.authentication.additional_claims_provided"
     CLAIMS_KEY = "claims"
     LOCALHOST_STRINGS = {"localhost", "[::1]", "::1", "127.0.0.1"}
+    IS_CAE_ENABLED = True
+    
 
     def __init__(
         self,
