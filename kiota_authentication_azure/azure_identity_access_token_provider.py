@@ -26,7 +26,6 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
     ADDITIONAL_CLAIMS_PROVIDED = "com.microsoft.kiota.authentication.additional_claims_provided"
     CLAIMS_KEY = "claims"
     LOCALHOST_STRINGS = {"localhost", "[::1]", "::1", "127.0.0.1"}
-    IS_CAE_ENABLED = True
 
     def __init__(
         self,
@@ -34,7 +33,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         options: Optional[Dict],
         scopes: List[str] = [],
         allowed_hosts: List[str] = [],
-        is_cae_enabled: bool = True,
+        is_cae_enabled: Optional[bool] = True,
     ) -> None:
         if not credentials:
             raise ValueError("Parameter credentials cannot be null")
@@ -54,7 +53,6 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         self,
         uri: str,
         additional_authentication_context: Dict[str, Any] = {},
-        is_cae_enabled: Optional[bool] = True
     ) -> str:
         """This method is called by the BaseBearerTokenAuthenticationProvider class to get the
         access token.
@@ -105,12 +103,12 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
                 result = self._credentials.get_token(
                     *self._scopes,
                     claims=decoded_claim,
-                    is_cae_enabled=is_cae_enabled,
+                    is_cae_enabled=self._is_cae_enabled,
                     **self._options
                 )
             else:
                 result = self._credentials.get_token(
-                    *self._scopes, claims=decoded_claim, is_cae_enabled=is_cae_enabled
+                    *self._scopes, claims=decoded_claim, is_cae_enabled=self.is_cae_enabled
                 )
 
             if inspect.isawaitable(result):
