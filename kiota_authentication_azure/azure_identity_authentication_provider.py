@@ -18,7 +18,6 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
         scopes: List[str] = [],
         allowed_hosts: List[str] = [],
         is_cae_enabled: bool = True,
-
     ) -> None:
         """[summary]
 
