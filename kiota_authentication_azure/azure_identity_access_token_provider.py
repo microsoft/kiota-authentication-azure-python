@@ -33,7 +33,7 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         options: Optional[Dict],
         scopes: List[str] = [],
         allowed_hosts: List[str] = [],
-        is_cae_enabled: Optional[bool] = True,
+        is_cae_enabled: bool = True,
     ) -> None:
         if not credentials:
             raise ValueError("Parameter credentials cannot be null")
