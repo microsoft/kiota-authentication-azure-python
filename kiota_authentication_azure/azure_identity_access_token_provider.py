@@ -27,7 +27,6 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
     CLAIMS_KEY = "claims"
     LOCALHOST_STRINGS = {"localhost", "[::1]", "::1", "127.0.0.1"}
     IS_CAE_ENABLED = True
-    
 
     def __init__(
         self,
@@ -52,7 +51,10 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
         self._allowed_hosts_validator = AllowedHostsValidator(allowed_hosts)
 
     async def get_authorization_token(
-        self, uri: str, additional_authentication_context: Dict[str, Any] = {}, is_cae_enabled: bool = True
+        self,
+        uri: str,
+        additional_authentication_context: Dict[str, Any] = {},
+        is_cae_enabled: bool = True
     ) -> str:
         """This method is called by the BaseBearerTokenAuthenticationProvider class to get the
         access token.
@@ -101,10 +103,15 @@ class AzureIdentityAccessTokenProvider(AccessTokenProvider):
 
             if self._options:
                 result = self._credentials.get_token(
-                    *self._scopes, claims=decoded_claim, is_cae_enabled=is_cae_enabled, **self._options
+                    *self._scopes,
+                    claims=decoded_claim,
+                    is_cae_enabled=is_cae_enabled,
+                    **self._options
                 )
             else:
-                result = self._credentials.get_token(*self._scopes, claims=decoded_claim, is_cae_enabled=is_cae_enabled)
+                result = self._credentials.get_token(
+                    *self._scopes, claims=decoded_claim, is_cae_enabled=is_cae_enabled
+                )
 
             if inspect.isawaitable(result):
                 result = await result
