@@ -15,9 +15,10 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
         self,
         credentials: Union["TokenCredential", "AsyncTokenCredential"],
         options: Optional[Dict] = None,
-        is_cae_enabled: bool = True,
         scopes: List[str] = [],
         allowed_hosts: List[str] = [],
+        is_cae_enabled: bool = True,
+
     ) -> None:
         """[summary]
 
