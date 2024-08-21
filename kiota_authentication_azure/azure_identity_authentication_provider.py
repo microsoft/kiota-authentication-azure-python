@@ -32,6 +32,6 @@ class AzureIdentityAuthenticationProvider(BaseBearerTokenAuthenticationProvider)
         """
         super().__init__(
             AzureIdentityAccessTokenProvider(
-                credentials, options, is_cae_enabled, scopes, allowed_hosts
+              credentials, options, scopes, allowed_hosts,   is_cae_enabled=is_cae_enabled
             )
         )
